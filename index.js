@@ -75,7 +75,20 @@ app.put('/create/:id',async(req,res)=>{
 
 })
 
+// update status
+app.patch('/create/:id',async(req,res)=>{
+  const id =req.params.id;
+  const filter = {_id: new ObjectId(id)}
+const updatebooking=req.body;
+const updateDoc={
+$set:{
+  status:updatebooking.status
+}
+}
+const result = await assignmentsCollection.updateOne(filter,updateDoc)
+res.send(result)
 
+})
 
 
 
