@@ -27,10 +27,15 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
 
+    const assignmentsCollection =client.db("createAssignmentsDB").collection("createAssignments")
 
 
-
-
+// create
+app.post('/create',async(req,res)=>{
+const user=req.body
+const result = await assignmentsCollection.insertOne(user);
+res.send(result)
+})
 
 
 
