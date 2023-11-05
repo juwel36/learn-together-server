@@ -38,6 +38,13 @@ res.send(result)
 })
 
 
+// read
+app.get('/create',async(req,res)=>{
+  const cursor=assignmentsCollection.find()
+  const result=await cursor.toArray()
+  res.send(result)
+  })
+  
 
 
 
