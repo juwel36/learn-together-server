@@ -1,5 +1,5 @@
 const express = require('express')
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors= require('cors')
 require('dotenv').config()
 const app = express()
@@ -44,8 +44,14 @@ app.get('/create',async(req,res)=>{
   const result=await cursor.toArray()
   res.send(result)
   })
-  
 
+  //read  singledata
+app.get('/create/:id',async(req,res)=>{
+const id=req.params.id
+const query={_id: new ObjectId(id)} 
+const user=await assignmentsCollection.findOne(query)
+res.send(user)
+})
 
 
 
