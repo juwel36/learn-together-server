@@ -53,6 +53,27 @@ const user=await assignmentsCollection.findOne(query)
 res.send(user)
 })
 
+// update create data
+app.put('/create/:id',async(req,res)=>{
+  const id =req.params.id;
+  const filter = {_id: new ObjectId(id)}
+  const options={upsert:true}
+  const updateuser=req.body;
+  const user ={
+    $set:{
+      title:updateuser.title,
+      marks:updateuser.marks,
+      image:updateuser.image,
+      Deficalty:updateuser.Deficalty,
+      date:updateuser.date,
+      description:updateuser.description,
+    }
+    }
+
+    const result = await assignmentsCollection.updateOne(filter,user,options)
+    res.send(result)
+
+})
 
 
 
