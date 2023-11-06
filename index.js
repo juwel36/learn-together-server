@@ -29,6 +29,61 @@ async function run() {
 
     const assignmentsCollection =client.db("createAssignmentsDB").collection("createAssignments")
     const submitCollection =client.db("createAssignmentsDB").collection("SubmitAssignments")
+    const feedbackCollection =client.db("createAssignmentsDB").collection("Assignmentsfeedback")
+
+
+
+// for validation
+    app.get('/assignmentCount',async(req,res)=>{
+      const count=await assignmentsCollection.estimatedDocumentCount();
+      res.send({count})
+      })
+      
+      
+
+
+    // feedback
+    app.post('/feedback',async(req,res)=>{
+      const user=req.body
+      const result = await feedbackCollection.insertOne(user);
+      res.send(result)
+      })
+// read feedback
+app.get('/feedback',async(req,res)=>{
+  const cursor=feedbackCollection.find()
+  const result=await cursor.toArray()
+  res.send(result)
+  })
+
+  
+// delete feedback
+app.delete('/feedback/:id',async(req,res)=>{
+  const id=req.params.id
+  const query={_id: new ObjectId(id) }
+  const result=await feedbackCollection.deleteOne(query)
+  res.send(result)
+  })
+
+  // //  update feedback
+  app.patch('/submit/:id',async(req,res)=>{
+    const id =req.params.id;
+    const filter = {_id: new ObjectId(id)}
+  const updatebooking=req.body;
+  const updateDoc={
+  $set:{
+    status:updatebooking.status
+  }
+  }
+  const result = await submitCollection.updateOne(filter,updateDoc)
+  res.send(result)
+  
+  })
+
+
+
+
+
+
 
 
 
