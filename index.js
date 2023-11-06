@@ -28,6 +28,25 @@ async function run() {
     // await client.connect();
 
     const assignmentsCollection =client.db("createAssignmentsDB").collection("createAssignments")
+    const submitCollection =client.db("createAssignmentsDB").collection("SubmitAssignments")
+
+
+
+// create submit
+app.post('/submit',async(req,res)=>{
+  const user=req.body
+  const result = await submitCollection.insertOne(user);
+  res.send(result)
+  })
+
+// read
+app.get('/submit',async(req,res)=>{
+  const cursor=submitCollection.find()
+  const result=await cursor.toArray()
+  res.send(result)
+  })
+
+
 
 
 // create
